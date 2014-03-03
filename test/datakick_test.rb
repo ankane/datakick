@@ -43,7 +43,7 @@ class TestDatakick < Minitest::Test
   protected
 
   def datakick
-    Datakick.new
+    Datakick.new(host: "http://0.0.0.0:5000")
   end
 
 end

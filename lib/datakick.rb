@@ -5,22 +5,21 @@ require "datakick/version"
 require "datakick/item"
 
 class Datakick
-  API_VERSION = 1
-  # API_HOST = "http://0.0.0.0:5000"
-  API_HOST = "https://www.datakick.org"
 
-  def initialize
+  def initialize(options = {})
+    @host = options[:host] || "https://www.datakick.org"
+    @version = options[:version] || 1
   end
 
   def item(gtin)
-    response = http_client.get("/api/items/#{gtin}?version=#{API_VERSION}")
+    response = http_client.get("/api/items/#{gtin}?version=#{@version}")
     if response.success?
       Item.new(JSON.parse(response.body))
     end
   end
 
   def update_item(gtin, attributes)
-    response = http_client.put("/api/items/#{gtin}?version=#{API_VERSION}", attributes)
+    response = http_client.put("/api/items/#{gtin}?version=#{@version}", attributes)
     if response.success?
       Item.new(JSON.parse(response.body))
     end
@@ -32,14 +31,14 @@ class Datakick
       image: image,
       perspective: image_type
     }
-    response = http_client.post("/api/items/#{gtin}/images?version=#{API_VERSION}", params)
+    response = http_client.post("/api/items/#{gtin}/images?version=#{@version}", params)
     if response.success?
       JSON.parse(response.body)
     end
   end
 
   def items(params = {})
-    response = http_client.get("/api/items?version=#{API_VERSION}", params)
+    response = http_client.get("/api/items?version=#{@version}", params)
     if response.success?
       JSON.parse(response.body).map do |item|
         Item.new(item)
@@ -48,7 +47,7 @@ class Datakick
   end
 
   def paginated_items(params, &block)
-    response = http_client.get("/api/items?version=#{API_VERSION}", params)
+    response = http_client.get("/api/items?version=#{@version}", params)
     begin
       links = {}
       if response.success?
@@ -70,7 +69,7 @@ class Datakick
   protected
 
   def http_client
-    Faraday.new(url: API_HOST) do |conn|
+    Faraday.new(url: @host) do |conn|
       conn.request :multipart
       conn.request :url_encoded
       conn.adapter :net_http
