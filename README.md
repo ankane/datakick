@@ -26,6 +26,12 @@ item.name
 item.size
 ```
 
+Create or update an item
+
+```ruby
+datakick.update_item("000000000000", {name: "Test"})
+```
+
 List items
 
 ```ruby
@@ -48,13 +54,7 @@ Search items
 datakick.items(query: "peanut butter")
 ```
 
-Update item
-
-```ruby
-datakick.update_item("000000000000", {name: "Test"})
-```
-
-Add photo
+Add an image
 
 ```ruby
 image = Faraday::UploadIO.new("ice_cream.jpg", "image/jpeg")
