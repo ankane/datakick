@@ -66,7 +66,7 @@ datakick.add_image("000000000000", image, image_type)
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/ankane/datakick/issues)
-- Fix bugs and [submit pull requests](https://github.com/ankane/datakick/pulls)
+- [Report bugs](https://github.com/ankane/datakick-rb/issues)
+- Fix bugs and [submit pull requests](https://github.com/ankane/datakick-rb/pulls)
 - Write, clarify, or fix documentation
 - Suggest or add new features
