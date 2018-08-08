@@ -48,7 +48,7 @@ class Datakick
 
   def paginated_items(params)
     response = http_client.get("/api/items?version=#{@version}", params)
-    begin
+    loop do
       links = {}
       if response.success?
         JSON.parse(response.body).map do |item|
@@ -62,8 +62,9 @@ class Datakick
           links[parts[2]] = parts[1]
         end
       end
-      # p links
-    end while links["next"] and (response = http_client.get(links["next"]))
+
+      break unless links["next"] && (response = http_client.get(links["next"]))
+    end
   end
 
   protected
