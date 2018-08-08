@@ -46,7 +46,7 @@ class Datakick
     end
   end
 
-  def paginated_items(params, &block)
+  def paginated_items(params)
     response = http_client.get("/api/items?version=#{@version}", params)
     begin
       links = {}
